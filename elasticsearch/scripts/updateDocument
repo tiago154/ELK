@@ -1,0 +1,7 @@
+POST usuarios/all/1/_update
+{
+  "doc": {
+    "Nome": "TesteAlterado",
+    "Email": "teste@teste.com.br"
+  }
+}

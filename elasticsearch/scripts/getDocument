@@ -1,0 +1,6 @@
+GET usuarios/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}

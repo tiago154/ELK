@@ -1,0 +1,53 @@
+version: "3.1"
+services:
+  elasticsearch:
+    build:
+      context: elasticsearch/
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.0
+    volumes:
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elk
+      
+  logstash:
+    build:
+      context: logstash/
+    image: docker.elastic.co/logstash/logstash:6.3.2
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      - ./logstash/drivers:/usr/share/logstash/drivers
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+    container_name: logstash
+    command: bash -c "logstash-plugin install logstash-filter-prune && logstash"
+    ports:
+      - "5000:5000"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    build:
+      context: kibana/
+    image: docker.elastic.co/kibana/kibana:6.3.0
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+networks:
+  elk:
+    driver: bridge

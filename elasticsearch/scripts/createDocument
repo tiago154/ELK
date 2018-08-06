@@ -1,0 +1,15 @@
+# Gerando o ID do documento de forma automática
+POST usuarios/all/
+{
+  "Id": 1,
+  "Nome": "Teste",
+  "Email": "teste@teste.com"
+}
+
+# Dessa forma o ID do documento é setado na requisição
+PUT usuarios/all/1
+{
+  "Id": 1,
+  "Nome": "Teste",
+  "Email": "teste@teste.com"
+}

@@ -1,0 +1,6 @@
+- pipeline.id: sqlserver
+  path.config: "/usr/share/logstash/pipeline/sqlserver.conf"
+  pipeline.workers: 1
+
+- pipeline.id: http
+  path.config: "/usr/share/logstash/pipeline/http.conf"
