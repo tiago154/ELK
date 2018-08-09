@@ -6,6 +6,7 @@ PUT usuarios
   },
   "mappings": {
     "all": {
+      "dynamic" : "strict"
       "properties": {
         "Id": {
           "type": "integer"
@@ -22,3 +23,4 @@ PUT usuarios
 }
 
 # "all" é nome do tipo do index.
+# dynamic - strict, apenas aceita insert no modelo estipulado, caso contrário irá retornar erro.
